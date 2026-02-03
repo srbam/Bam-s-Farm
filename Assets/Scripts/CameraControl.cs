@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class CameraControl : MonoBehaviour
 {
+    private Camera cam;
+
     public InputAction moveAction;
     public InputAction zoomAction;
 
@@ -20,6 +22,7 @@ public class CameraControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cam = GetComponent<Camera>();
         moveAction.Enable();
         zoomAction.Enable();
     }
@@ -44,7 +47,7 @@ public class CameraControl : MonoBehaviour
             transform.position.z
         );
     }
-    
+
     void Zoom()
     {
         float scrollInput = zoomAction.ReadValue<Vector2>().y;
@@ -55,13 +58,26 @@ public class CameraControl : MonoBehaviour
             targetZoom = Mathf.Clamp(targetZoom, zoomMax, zoomMin);
         }
 
-        float currentZ = transform.position.z;
-        float newZ = Mathf.Lerp(currentZ, targetZoom, Time.deltaTime * smoothSpeed);
+        if (Mathf.Abs(transform.position.z - targetZoom) > 0.0001f)
+        {
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
 
-        transform.position = new Vector3(
-            transform.position.x,
-            transform.position.y,
-            newZ
-        );
+            // Save the mouse pos before zooming
+            mouseScreenPos.z = Mathf.Abs(transform.position.z);
+            Vector3 mouseWorldBefore = cam.ScreenToWorldPoint(mouseScreenPos);
+
+            // Zooms the camera
+            float newZ = Mathf.Lerp(transform.position.z, targetZoom, Time.deltaTime * smoothSpeed);
+            transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
+
+            // Retrieve mouse pos after zooming
+            mouseScreenPos.z = Mathf.Abs(transform.position.z);
+            Vector3 mouseWorldAfter = cam.ScreenToWorldPoint(mouseScreenPos);
+
+            // Calculate the difference between before and after
+            Vector3 difference = mouseWorldBefore - mouseWorldAfter;
+            // Move camera based on difference
+            transform.position += new Vector3(difference.x, difference.y, 0);
+        }
     }
 }
