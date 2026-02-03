@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 409885435}
   - component: {fileID: 409885436}
+  - component: {fileID: 409885437}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -210,6 +211,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &409885437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409885434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c208f77eb63074446b5ae239a07c20a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Crop
+  data: {fileID: 11400000, guid: 2de6b0726b3b7e448af75bcd8a1d9981, type: 2}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +449,7 @@ Transform:
   m_GameObject: {fileID: 1155755880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: -4.01}
   m_LocalScale: {x: 7.88, y: 4.76, z: 4.76}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -624,6 +638,8 @@ MonoBehaviour:
     m_Flags: 0
   moveSpeed: 10
   zoomSpeed: 1
+  zoomSensitivity: 1
+  smoothSpeed: 10
 --- !u!1 &1855654208
 GameObject:
   m_ObjectHideFlags: 0
